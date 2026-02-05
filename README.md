@@ -153,6 +153,7 @@ server/
     │  └─ events/
     │     ├─ events.controller.ts
     │     ├─ events.service.ts
+    │     ├─ events.routes.ts
     │     ├─ events.repo.ts
     │     └─ events.schema.ts
     └─ realtime/
