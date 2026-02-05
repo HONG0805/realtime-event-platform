@@ -1,6 +1,6 @@
 # Realtime Event Monitoring Platform (Backend)
 
-IoT / 스마트 안전관리 환경에서 발생하는 이벤트(센서 데이터, 알람 등)를 수집·저장하고,  
+다양한 IoT 환경에서 발생하는 이벤트(센서 데이터, 알람 등)를 수집·저장하고,  
 **Redis Pub/Sub + WebSocket**을 이용해 실시간으로 브로드캐스트하는 백엔드 프로젝트입니다.
 
 최근 이벤트는 **Redis List 캐시**를 활용해 조회 성능을 개선했고,  
@@ -153,7 +153,22 @@ server/
     │  └─ events/
     │     ├─ events.controller.ts
     │    심 포인트
+```
 
+---
+
+## 🔄아키텍처 흐름 
+- Client → `POST /api/events`
+- API 서버가 요청 검증 후 MySQL에 이벤트 저장
+- Redis에
+  - `LPUSH events:recent` (최근 이벤트 캐시)
+  - `PUBLISH events:new` (실시간 채널)
+- Realtime Bridge가 Redis Pub/Sub 구독
+- WebSocket 서버를 통해 연결된 클라이언트에 실시간 전송
+
+--- 
+
+## ⭐프로젝트 핵심 포인트
 - Express 기반 Controller / Service / Repository 구조 설계
 - Zod를 활용한 요청 데이터 검증
 - MySQL Pagination & Filter Query 구현
