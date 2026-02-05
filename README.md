@@ -8,7 +8,7 @@ IoT / 스마트 안전관리 환경에서 발생하는 이벤트(센서 데이�
 
 ---
 
-## Tech Stack
+## 🛠기술 스택
 
 - **Language**: Node.js, TypeScript
 - **Framework**: Express
@@ -21,32 +21,32 @@ IoT / 스마트 안전관리 환경에서 발생하는 이벤트(센서 데이�
 
 ---
 
-## Features
+## ✨주요 기능
 
-### 1) 이벤트 수집
+### 1️⃣ 이벤트 수집
 - `POST /api/events`
 - Zod 기반 요청 데이터 검증
 - MySQL에 이벤트 영속 저장
 
-### 2) 이벤트 조회
+### 2️⃣ 이벤트 조회
 - `GET /api/events?page=&size=&type=&level=`
 - 페이지네이션 및 필터(type, level) 지원
 - 최신 이벤트 기준 정렬
 
-### 3) 최근 이벤트 캐시
+### 3️⃣ 최근 이벤트 캐시
 - 조건: `page=1`, `size<=50`, 필터 없음
 - Redis List(`events:recent`)에서 우선 조회
 - DB 부하 감소 및 응답 속도 개선
 
-### 4) 실시간 이벤트 브로드캐스트
+### 4️⃣ 실시간 이벤트 브로드캐스트
 - 이벤트 생성 시 Redis Pub/Sub(`events:new`)으로 publish
 - WebSocket(`/ws`)으로 연결된 클라이언트에 실시간 전달
 
 ---
 
-## API Usage
+## API 사용 예시시
 
-### Health Check
+### Health Check (상태 확인)
 ```bash
 curl http://localhost:3000/api/health
 ```
@@ -86,7 +86,7 @@ curl "http://localhost:3000/api/events?page=1&size=10&type=GAS&level=WARN"
 
 ---
 
-## WebSocket Realtime
+## 🌐WebSocket Realtime
 - Endpoint: `ws://localhost:3000/ws`
 ### Chrome DevTools Console:
 ```bash
@@ -97,12 +97,12 @@ ws.onmessage = (e) => console.log("WS:", e.data);
 
 ---
 
-## Run with Docker Compose (One Command)
+## 🐳Run with Docker Compose
 
-### Prerequisites
+### 사전 준비
 - Docker Desktop installed
 
-### Setup & Run
+### 실행 방법법
 프로젝트 루트에서 실행
 ```bash
 docker compose up -d --build
@@ -114,14 +114,14 @@ docker compose ps
 - MySQL: `localhost:3307`
 - Redis: `localhost:6379`
 
-## Verify
+## 실행 확인인
 ```bash
 curl http://localhost:3000/api/health
 ```
 
 ---
 
-## Stop & Clean
+## 🛑Stop & Clean
 ```bash
 docker compose down
 ```
@@ -133,7 +133,7 @@ docker compose down -v
 
 ---
 
-## Project Structure
+## 📂Project Structure
 
 ```bash
 server/
@@ -152,30 +152,7 @@ server/
     │  ├─ health/
     │  └─ events/
     │     ├─ events.controller.ts
-    │     ├─ events.service.ts
-    │     ├─ events.routes.ts
-    │     ├─ events.repo.ts
-    │     └─ events.schema.ts
-    └─ realtime/
-       ├─ wsServer.ts
-       └─ realtimeBridge.ts
-```
-
----
-
-## Architecture Flow
-
-- Client → `POST /api/events`
-- API 서버가 요청 검증 후 MySQL에 이벤트 저장
-- Redis에
-  - `LPUSH events:recent` (최근 이벤트 캐시)
-  - `PUBLISH events:new` (실시간 채널)
-- Realtime Bridge가 Redis Pub/Sub 구독
-- WebSocket 서버를 통해 연결된 클라이언트에 실시간 전송
-
----
-
-## Portfolio Highlights
+    │    심 포인트
 
 - Express 기반 Controller / Service / Repository 구조 설계
 - Zod를 활용한 요청 데이터 검증
@@ -185,7 +162,7 @@ server/
 
 ---
 
-## Troubleshooting Notes
+## ⚠️Troubleshooting Notes
 
 - Windows 환경에서는 `cp` 대신 `copy` 명령어 사용
 - Docker 컨테이너 간 통신 시 `localhost`가 아니라 서비스명(`mysql`, `redis`) 사용
